@@ -34,6 +34,7 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         var DROP_TABLE_QUERY = "DROP $DATABASE_NAME IF EXISTS $TABLE_NAME"
         db?.execSQL(DROP_TABLE_QUERY)
         onCreate(db)
+        db?.close()
     }
 
     fun createAlarm(alarm : Alarm){
@@ -45,6 +46,7 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         values.put(COLUMN_LABEL, alarm.Label)
         values.put(COLUMN_ON, alarm.On)
         db.insert(TABLE_NAME,null,values)
+        db.close()
     }
     fun getAllData() : List<Alarm>{
         var alarmList = arrayListOf<Alarm>()
@@ -66,6 +68,11 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return alarmList
     }
     fun deleteData(alarmId : Int){
-
+        var db = writableDatabase
+        var whereClause = "$COLUMN_ID = ?"
+        var whereArgus = arrayOf<String>(alarmId as String)
+        db.delete(TABLE_NAME, whereClause, whereArgus)
+        db.close()
     }
+
 }
