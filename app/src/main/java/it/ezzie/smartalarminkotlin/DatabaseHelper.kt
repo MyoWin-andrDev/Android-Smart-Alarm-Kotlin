@@ -17,10 +17,18 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        TODO("Not yet implemented")
+        var CREATE_TABLE_QUERY = "CREATE $TABLE_NAME {" +
+                "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT" +
+                "$COLUMN_TITLE TEXT" +
+                "$COLUMN_DESCRIPTION TEXT" +
+                "$COLUMN_DATE TEXT" +
+                "$COLUMN_TIME TEXT"
+        db?.execSQL(CREATE_TABLE_QUERY)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("Not yet implemented")
+        var DROP_TABLE_QUERY = "DROP $DATABASE_NAME IF EXISTS $TABLE_NAME"
+        db?.execSQL(DROP_TABLE_QUERY)
+        onCreate(db)
     }
 }
