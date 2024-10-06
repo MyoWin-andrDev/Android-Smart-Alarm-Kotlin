@@ -86,7 +86,22 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
         var on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) as Boolean
         var alarm = Alarm(id,hour,minute,unit,label,on)
+        cursor.close()
+        db.close()
         return alarm
     }
-
+    fun updateData(alarm: Alarm){
+        var db = writableDatabase
+        var values = ContentValues()
+        values.put(COLUMN_ID, alarm.id)
+        values.put(COLUMN_HOUR, alarm.Hour)
+        values.put(COLUMN_MINUTE, alarm.Minute)
+        values.put(COLUMN_UNIT, alarm.Unit)
+        values.put(COLUMN_LABEL, alarm.Label)
+        values.put(COLUMN_ON, alarm.On)
+        var whereClause = "$COLUMN_ID = ?"
+        var whereArgs = arrayOf<String>(alarm.id as String)
+        db.update(TABLE_NAME, values, whereClause, whereArgs)
+        db.close()
+    }
 }
