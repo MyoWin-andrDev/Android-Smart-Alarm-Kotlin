@@ -59,7 +59,7 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
             var minute = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
             var unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
             var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
-            var on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) == 1
+            var on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) as Boolean
             var alarm = Alarm(id,hour,minute,unit,label,on)
             alarmList.add(alarm)
         }
@@ -73,6 +73,20 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         var whereArgus = arrayOf<String>(alarmId as String)
         db.delete(TABLE_NAME, whereClause, whereArgus)
         db.close()
+    }
+    fun getAlarmById(alarmId: Int) : Alarm {
+        var db = readableDatabase
+        var READ_DATA_QUERY ="SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = $alarmId"
+        var cursor = db.rawQuery(READ_DATA_QUERY, null)
+        cursor.moveToFirst()
+        var id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+        var hour = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
+        var minute = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
+        var unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
+        var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
+        var on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) as Boolean
+        var alarm = Alarm(id,hour,minute,unit,label,on)
+        return alarm
     }
 
 }
