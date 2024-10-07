@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#808080</color>
+    <color name="white">#f7fbf1</color>
+    <color name="antiWhite">#e0e4db</color>
+    <color name="grey">#ecefe6</color>
+    <color name="grey1">#BDBDBD</color>
+    <color name="greenDark">#3a693a</color>
+    <color name="greenLight">#bbf0b5</color>
+    <color name="error">#ba1a1a</color>
 </resources>
