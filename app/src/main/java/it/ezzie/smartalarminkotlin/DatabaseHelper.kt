@@ -1,5 +1,6 @@
 package it.ezzie.smartalarminkotlin
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -38,8 +39,18 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         onCreate(db)
     }
 
-    public fun createData(){
-
+    fun createData(alarm : Alarm){
+        var db = writableDatabase
+        var value = ContentValues()
+        value.put(COLUMN_ID, alarm.id)
+        value.put(COLUMN_HOUR, alarm.Hour)
+        value.put(COLUMN_MINUTE, alarm.Minute)
+        value.put(COLUMN_DAY, alarm.Day)
+        value.put(COLUMN_UNIT, alarm.Unit)
+        value.put(COLUMN_LABEL, alarm.Label)
+        value.put(COLUMN_ON, alarm.On)
+        db.insert(TABLE_NAME, null, value)
+        db.close()
     }
 
 
