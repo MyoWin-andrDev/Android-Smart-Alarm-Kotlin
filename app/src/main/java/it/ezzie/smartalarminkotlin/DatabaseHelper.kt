@@ -53,5 +53,16 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db.close()
     }
 
+    fun getAllData () : List<Alarm>{
+        var alarmList = arrayListOf<Alarm>()
+        var db = readableDatabase
+        var READ_QUERY = "SELECT * FROM $TABLE_NAME"
+        var cursor = db.rawQuery(READ_QUERY, null)
+        while (cursor.moveToNext()){
+            var id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            var
+        }
+    }
+
 
 }
