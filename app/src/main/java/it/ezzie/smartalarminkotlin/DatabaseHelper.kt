@@ -20,11 +20,20 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     }
     override fun onCreate(db: SQLiteDatabase?) {
-        var CREATE_TABLE_QUERY = ""
+        var CREATE_TABLE_QUERY = "CREATE TABLE $TABLE_NAME { " +
+                "$COLUMN_HOUR INTEGER PRIMARY KEY AUTO INCREMENT" +
+                "$COLUMN_HOUR TEXT" +
+                "$COLUMN_MINUTE TEXT" +
+                "$COLUMN_DAY TEXT" +
+                "$COLUMN_UNIT TEXT" +
+                "$COLUMN_ON TEXT" +
+                "$COLUMN_LABEL TEXT"
+        db?.execSQL(CREATE_TABLE_QUERY)
+        db?.close()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("Not yet implemented")
+
     }
 
 
