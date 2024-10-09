@@ -12,6 +12,7 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         private var COLUMN_ID : String = "Id"
         private var COLUMN_HOUR : String = "Hour"
         private var COLUMN_MINUTE : String = "Minute"
+        private var COLUMN_DAY : String = "Day"
         private var COLUMN_UNIT : String = "Unit"
         private var COLUMN_ON : String = "AlarmOn"
         private var COLUMN_LABEL : String = "Label"
@@ -19,7 +20,7 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     }
     override fun onCreate(db: SQLiteDatabase?) {
-        TODO("Not yet implemented")
+        var CREATE_TABLE_QUERY = ""
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
