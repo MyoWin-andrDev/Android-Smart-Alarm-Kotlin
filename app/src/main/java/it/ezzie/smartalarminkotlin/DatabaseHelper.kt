@@ -74,5 +74,11 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return alarmList
     }
 
-
+    fun deleteData(alarmId : Int){
+        var db = writableDatabase
+        var whereClause = "$COLUMN_ID = ?"
+        var whereArgs = arrayOf(alarmId as String)
+        db.delete(TABLE_NAME, whereClause, whereArgs)
+        db.close()
+    }
 }
