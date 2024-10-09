@@ -58,10 +58,20 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         var db = readableDatabase
         var READ_QUERY = "SELECT * FROM $TABLE_NAME"
         var cursor = db.rawQuery(READ_QUERY, null)
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             var id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
-            var
+            var hour = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
+            var minute = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
+            var day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
+            var unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
+            var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
+            var on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) as Boolean
+            var alarm = Alarm(id, hour, minute, day, unit, label, on)
+            alarmList.add(alarm)
         }
+        cursor.close()
+        db.close()
+        return alarmList
     }
 
 
