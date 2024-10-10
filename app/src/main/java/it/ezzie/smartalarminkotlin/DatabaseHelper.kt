@@ -81,4 +81,8 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db.delete(TABLE_NAME, whereClause, whereArgs)
         db.close()
     }
+
+    fun getAlarmById ( id : Int) : Alarm {
+
+    }
 }
