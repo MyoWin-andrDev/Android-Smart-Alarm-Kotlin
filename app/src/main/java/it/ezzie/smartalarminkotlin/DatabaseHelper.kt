@@ -83,6 +83,23 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     fun getAlarmById ( id : Int) : Alarm {
+        var db = readableDatabase
+        var READ_ID_QUERY = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = ?"
+        var value = ContentValues()
+        var cursor = db.rawQuery(READ_ID_QUERY, null)
+            var id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            var hour = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
+            var minute = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
+            var day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
+            var unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
+            var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
+            var on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) as Boolean
+            var alarm = Alarm(id, hour, minute, day, unit, label, on)
+        return alarm
+    }
+
+    fun updateData(){
+        var db = writableDatabase
 
     }
 }
