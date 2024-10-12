@@ -46,59 +46,85 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/linearAlarm"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="40dp"
         android:timePickerMode="spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleGroup"
-        android:backgroundTint="@color/greenDark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timePicker"
-        app:singleSelection="true">
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+            android:id="@+id/time"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="M"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/timePicker"
+            app:layout_constraintBottom_toTopOf="@id/editLabel"
+            app:justifyContent="space_evenly"
+            app:toggle_selectableAmount="7"
+            >
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="T"/>
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/btnSun"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_selectedBackgroundColor="@color/greenDark"
+                app:toggle_selectedTextColor="@color/white"
+                app:toggle_text="S" />
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="W"/>
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/btnMon"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_selectedBackgroundColor="@color/greenDark"
+                app:toggle_selectedTextColor="@color/white"
+                app:toggle_text="M" />
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="T"/>
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/btnTue"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_selectedBackgroundColor="@color/greenDark"
+                app:toggle_selectedTextColor="@color/white"
+                app:toggle_text="T" />
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="F"/>
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/btnWed"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_selectedBackgroundColor="@color/greenDark"
+                app:toggle_selectedTextColor="@color/white"
+                app:toggle_text="W" />
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="S"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="S"/>
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/btnThu"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_selectedBackgroundColor="@color/greenDark"
+                app:toggle_selectedTextColor="@color/white"
+                app:toggle_text="T" />
 
 
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/btnFri"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_selectedBackgroundColor="@color/greenDark"
+                app:toggle_selectedTextColor="@color/white"
+                app:toggle_text="F" />
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/btnSat"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                app:toggle_selectedBackgroundColor="@color/greenDark"
+                app:toggle_selectedTextColor="@color/white"
+                app:toggle_text="S" />
+
+
+        </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editLabel"
