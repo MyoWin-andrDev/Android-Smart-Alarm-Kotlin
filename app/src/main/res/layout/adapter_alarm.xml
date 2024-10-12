@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="01"
         android:textSize="35sp"
-        android:fontFamily="@font/mulish_regular"
+        android:fontFamily="@font/lora_regular"
         android:gravity="center_vertical"/>
 
     <TextView
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toEndOf="@id/alarmColumn"
         android:text="00"
         android:textSize="35sp"
-        android:fontFamily="@font/mulish_regular"
+        android:fontFamily="@font/lora_regular"
         android:gravity="center_vertical" />
 
     </LinearLayout>
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:text="Add Label"
         android:textSize="16sp"
-        android:fontFamily="@font/mulish_regular"
+        android:fontFamily="@font/lora_regular"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/alarmTime"
@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:text="AM"
         android:textSize="20sp"
-        android:fontFamily="@font/mulish_regular"
+        android:fontFamily="@font/lora_regular"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/alarmTime"
         app:layout_constraintBottom_toBottomOf="@id/alarmTime"
