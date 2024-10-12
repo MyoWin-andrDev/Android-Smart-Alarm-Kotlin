@@ -36,6 +36,6 @@ class EditAlarm : AppCompatActivity() {
        }
     }
     fun initDayOfWeek(){
-
+        var dayOfWeek = calendar.get()
     }
 }
