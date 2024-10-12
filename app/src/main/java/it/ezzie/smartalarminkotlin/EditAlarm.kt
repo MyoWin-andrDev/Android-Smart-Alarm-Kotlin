@@ -20,6 +20,8 @@ class EditAlarm : AppCompatActivity() {
         initTimePicker();
     }
     fun initTimePicker(){
+        lateinit var unit : String
+        //Init TimePicker
        binding.timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
            calendar.set(Calendar.MINUTE, minute)
@@ -31,21 +33,27 @@ class EditAlarm : AppCompatActivity() {
            var totalResultMinute = totalSelectedMinute - currentTotalMinute
            var resultHour = totalResultMinute / 60
            var resultMinute = totalResultMinute % 60
-           var unit = SimpleDateFormat("a").format(calendar.time)
+           unit = SimpleDateFormat("a").format(calendar.time)
            if(totalResultMinute < 0) {
                resultHour = -resultHour
                resultMinute = -resultMinute
            }
            binding.timeCount.text = "Your alarm will ring in $resultHour hr $resultMinute min"
-           binding.btnOK.setOnClickListener(){
-               var hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
-               var minute = SimpleDateFormat("mm").format(calendar.time)
-               var label = binding.alarmEditTxt.text.toString()
-               var on = true
-               var alarm = Alarm( null ,hour, minute, null, unit, label, on)
-               databaseHelper.createData(alarm)
-               finish()
-           }
        }
+        //Init Btn
+        //Btn OK
+        binding.btnOK.setOnClickListener(){
+            var hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
+            var minute = SimpleDateFormat("mm").format(calendar.time)
+            var label = binding.alarmEditTxt.text.toString()
+            var on = true
+            var alarm = Alarm( null ,hour, minute, null, unit, label, on)
+            databaseHelper.createData(alarm)
+            finish()
+        }
+        //Btn Cancel
+        binding.btnCancel.setOnClickListener(){
+            onBackPressed()
+        }
     }
 }

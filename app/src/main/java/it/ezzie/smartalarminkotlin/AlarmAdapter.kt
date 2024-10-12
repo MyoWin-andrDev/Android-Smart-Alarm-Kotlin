@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import it.ezzie.smartalarminkotlin.databinding.AdapterAlarmBinding
 
-class AlarmAdapter(private var context : Context, private var alarmList : List<Alarm> ) : RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
+class AlarmAdapter(private var context : Context, private var alarmList : List<Alarm> , alarmEdit: AlarmClickedListener ) : RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
 
     class AlarmViewHolder(var binding: AdapterAlarmBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,9 +21,8 @@ class AlarmAdapter(private var context : Context, private var alarmList : List<A
     override fun getItemCount(): Int {
         return alarmList.size
     }
-    fun setAlarmList(alarmList: List<Alarm>) {
-        this.alarmList = alarmList
-        this.notifyDataSetChanged()
+    fun interface AlarmClickedListener{
+        fun onAlarmClick(alarm: Alarm);
     }
 
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {

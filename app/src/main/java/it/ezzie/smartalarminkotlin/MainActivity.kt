@@ -31,7 +31,11 @@ class MainActivity : AppCompatActivity() {
 
     fun initUI(){
         alarmList = databaseHelper.getAllData()
-        adapter = AlarmAdapter(this, alarmList)
+        adapter = AlarmAdapter(this, alarmList, alarmEdit = {alarm ->
+            var intent = Intent(this , EditAlarm::class.java)
+            intent.putExtra("alarmId", alarm.id)
+
+        })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
@@ -42,9 +46,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-    }
 
 }
