@@ -31,4 +31,5 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = AlarmAdapter(this,alarmList)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
+
 }
