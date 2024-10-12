@@ -19,8 +19,13 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        databaseHelper = DatabaseHelper(this)
+        initDatabase();
         initUI();
+        initListener();
+    }
+    fun initDatabase(){
+        databaseHelper = DatabaseHelper(this)
+        alarmList = databaseHelper.getAllData()
     }
     fun initUI(){
         binding.recyclerView.adapter = AlarmAdapter(this,alarmList)

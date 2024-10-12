@@ -8,11 +8,12 @@ import it.ezzie.smartalarminkotlin.databinding.AdapterAlarmBinding
 
 class AlarmAdapter(private var context : Context, private var alarmList : List<Alarm> ) : RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
 
-    class AlarmViewHolder(var binding : AdapterAlarmBinding) : RecyclerView.ViewHolder(binding.root){
+    class AlarmViewHolder(var binding: AdapterAlarmBinding) :
+        RecyclerView.ViewHolder(binding.root) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
-        var layoutInflater : LayoutInflater = LayoutInflater.from(parent.context)
+        var layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
         var binding = AdapterAlarmBinding.inflate(layoutInflater)
         return AlarmViewHolder(binding)
     }
@@ -29,16 +30,14 @@ class AlarmAdapter(private var context : Context, private var alarmList : List<A
         holder.binding.alarmUnit.setText(alarm.Unit)
 
         //AM/PM View
-        if(alarm.Unit.equals("AM")){
+        if (alarm.Unit.equals("AM")) {
             holder.binding.imageView.setImageResource(R.drawable.ic_sun)
-        }
-        else if(alarm.Unit.equals("PM")){
+        } else if (alarm.Unit.equals("PM")) {
             holder.binding.imageView.setImageResource(R.drawable.ic_moon)
         }
         //Init Alarm Switch UI
 
 
-        }
     }
 
 }
