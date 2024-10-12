@@ -35,4 +35,7 @@ class EditAlarm : AppCompatActivity() {
            binding.timeCount.text = "Your alarm will ring in $resultHour hr $resultMinute min"
        }
     }
+    fun initDayOfWeek(){
+
+    }
 }

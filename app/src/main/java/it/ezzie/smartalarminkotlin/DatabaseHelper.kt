@@ -44,7 +44,7 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         value.put(COLUMN_ID, alarm.id)
         value.put(COLUMN_HOUR, alarm.Hour)
         value.put(COLUMN_MINUTE, alarm.Minute)
-        value.put(COLUMN_DAY, alarm.Day)
+        value.put(COLUMN_DAY, alarm.Day.joinToString { "," })
         value.put(COLUMN_UNIT, alarm.Unit)
         value.put(COLUMN_LABEL, alarm.Label)
         value.put(COLUMN_ON, alarm.On)
@@ -61,10 +61,11 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
             var id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
             var hour = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
             var minute = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
-            var day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
+            var date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
             var unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
             var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
             var on : Boolean = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) == 1
+            var day = date.split(",")
             var alarm = Alarm(id, hour, minute, day, unit, label, on)
             alarmList.add(alarm)
         }
@@ -89,10 +90,11 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
             var id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
             var hour = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
             var minute = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
-            var day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
+            var date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
             var unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
             var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
             var on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) as Boolean
+            var day = date.split(",")
             var alarm = Alarm(id, hour, minute, day, unit, label, on)
         return alarm
     }
@@ -105,7 +107,7 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         value.put(COLUMN_ID, alarm.id)
         value.put(COLUMN_HOUR, alarm.Hour)
         value.put(COLUMN_MINUTE, alarm.Minute)
-        value.put(COLUMN_DAY, alarm.Day)
+        value.put(COLUMN_DAY, alarm.Day.joinToString { "," })
         value.put(COLUMN_UNIT, alarm.Unit)
         value.put(COLUMN_LABEL, alarm.Label)
         value.put(COLUMN_ON, alarm.On)
