@@ -12,22 +12,27 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var alarmList : List<Alarm>
     private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var adapter : AlarmAdapter
     private var REQUEST_CODE  = 123
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
+        databaseHelper = DatabaseHelper(this)
         setContentView(binding.root)
-        initDatabase();
         initUI();
         initListener();
     }
-    fun initDatabase(){
-        databaseHelper = DatabaseHelper(this)
-        alarmList = databaseHelper.getAllData()
+
+    override fun onResume() {
+        super.onResume()
+        initUI()
     }
+
     fun initUI(){
-        binding.recyclerView.adapter = AlarmAdapter(this,alarmList)
+        alarmList = databaseHelper.getAllData()
+        adapter = AlarmAdapter(this, alarmList)
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
     fun initListener(){
@@ -41,4 +46,5 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
     }
+
 }

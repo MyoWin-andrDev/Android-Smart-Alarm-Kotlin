@@ -4,15 +4,18 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import it.ezzie.smartalarminkotlin.databinding.ActivityEditAlarmBinding
+import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class EditAlarm : AppCompatActivity() {
     private lateinit var binding : ActivityEditAlarmBinding
     private var calendar : Calendar = Calendar.getInstance()
+    private lateinit var databaseHelper: DatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityEditAlarmBinding.inflate(layoutInflater)
+        databaseHelper = DatabaseHelper(this)
         setContentView(binding.root)
         initTimePicker();
     }
@@ -28,14 +31,21 @@ class EditAlarm : AppCompatActivity() {
            var totalResultMinute = totalSelectedMinute - currentTotalMinute
            var resultHour = totalResultMinute / 60
            var resultMinute = totalResultMinute % 60
+           var unit = SimpleDateFormat("a").format(calendar.time)
            if(totalResultMinute < 0) {
                resultHour = -resultHour
                resultMinute = -resultMinute
            }
            binding.timeCount.text = "Your alarm will ring in $resultHour hr $resultMinute min"
+           binding.btnOK.setOnClickListener(){
+               var hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
+               var minute = SimpleDateFormat("mm").format(calendar.time)
+               var label = binding.alarmEditTxt.text.toString()
+               var on = true
+               var alarm = Alarm( null ,hour, minute, null, unit, label, on)
+               databaseHelper.createData(alarm)
+               finish()
+           }
        }
-    }
-    fun initDayOfWeek(){
-        var dayOfWeek = calendar.get()
     }
 }
