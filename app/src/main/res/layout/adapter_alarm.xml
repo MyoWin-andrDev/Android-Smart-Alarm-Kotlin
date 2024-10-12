@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:id="@+id/listLinear"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_list">
+
+    <LinearLayout
+        android:id="@+id/alarmTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="15dp">
+
+    <TextView
+        android:id="@+id/alarmHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="01"
+        android:textSize="35sp"
+        android:fontFamily="@font/mulish_regular"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/alarmColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/alarmHour"
+        app:layout_constraintTop_toTopOf="@+id/alarmHour"
+        app:layout_constraintStart_toEndOf="@id/alarmHour"/>
+
+
+    <TextView
+        android:id="@+id/alarmMinute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/alarmHour"
+        app:layout_constraintBottom_toBottomOf="@id/alarmHour"
+        app:layout_constraintStart_toEndOf="@id/alarmColumn"
+        android:text="00"
+        android:textSize="35sp"
+        android:fontFamily="@font/mulish_regular"
+        android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/alarmLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Label"
+        android:textSize="16sp"
+        android:fontFamily="@font/mulish_regular"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/alarmTime"
+        app:layout_constraintTop_toBottomOf="@id/alarmTime"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/alarmUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AM"
+        android:textSize="20sp"
+        android:fontFamily="@font/mulish_regular"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/alarmTime"
+        app:layout_constraintBottom_toBottomOf="@id/alarmTime"
+        android:layout_marginStart="10dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_sun"
+        app:layout_constraintBottom_toTopOf="@id/alarmUnit"
+        app:layout_constraintStart_toEndOf="@id/alarmTime" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/alarmSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:track="@drawable/track_toggle"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@id/imageView"
+        android:layout_marginStart="50dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
