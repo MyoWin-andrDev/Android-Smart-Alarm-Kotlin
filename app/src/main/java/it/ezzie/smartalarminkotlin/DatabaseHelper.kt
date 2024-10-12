@@ -98,8 +98,19 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         return alarm
     }
 
-    fun updateData(){
+    fun updateData(alarm : Alarm){
         var db = writableDatabase
-
+        var whereClause = "$COLUMN_ID = ?"
+        var whereArgs = arrayOf(COLUMN_ID as String)
+        var value = ContentValues()
+        value.put(COLUMN_ID, alarm.id)
+        value.put(COLUMN_HOUR, alarm.Hour)
+        value.put(COLUMN_MINUTE, alarm.Minute)
+        value.put(COLUMN_DAY, alarm.Day)
+        value.put(COLUMN_UNIT, alarm.Unit)
+        value.put(COLUMN_LABEL, alarm.Label)
+        value.put(COLUMN_ON, alarm.On)
+        db.update(TABLE_NAME, value, whereClause, whereArgs)
+        db.close()
     }
 }
