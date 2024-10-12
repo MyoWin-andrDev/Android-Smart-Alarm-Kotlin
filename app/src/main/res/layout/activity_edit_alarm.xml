@@ -54,7 +54,7 @@
 
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
-            android:id="@+id/time"
+            android:id="@+id/toggleBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

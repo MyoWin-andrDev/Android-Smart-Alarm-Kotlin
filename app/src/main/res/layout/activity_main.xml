@@ -18,6 +18,7 @@
         android:text="Smart Alarm"
         android:fontFamily="@font/lora_regular"
         android:textSize="30dp"
+
         android:background="@drawable/title_bg"
         android:gravity="center_vertical"
         android:paddingStart="30dp"/>
