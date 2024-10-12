@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         adapter = AlarmAdapter(this, alarmList, alarmEdit = {alarm ->
             var intent = Intent(this , EditAlarm::class.java)
             intent.putExtra("alarmId", alarm.id)
-
+            startActivity(intent)
         })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
