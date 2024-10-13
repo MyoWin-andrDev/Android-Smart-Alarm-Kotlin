@@ -21,25 +21,9 @@ class EditAlarm : AppCompatActivity() {
         binding = ActivityEditAlarmBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelper(this)
         setContentView(binding.root)
-        initUpdateUI()
         initTimePicker()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun initUpdateUI() {
-        id = intent?.getIntExtra("alarmId", -1)!!
-        if (id != -1) {
-            val alarm = databaseHelper.getAlarmById(id)
-            if(alarm != null) {
-                binding.timePicker.hour = Integer.parseInt(alarm.Hour)
-                binding.timePicker.minute = Integer.parseInt(alarm.Minute)
-                binding.alarmEditTxt.setText(alarm.Label)
-                binding.btnOK.text = "Update"
-                binding.btnCancel.text = "Delete"
-                initListener(alarm)
-            }
-        }
-    }
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     private fun initTimePicker() {
@@ -64,41 +48,6 @@ class EditAlarm : AppCompatActivity() {
             }
             binding.timeCount.text = "Your alarm will ring in $resultHour hr $resultMinute min"
         }
-
-    }
-    private fun initListener(alarm : Alarm){
-        //Create Alarm
-        binding.btnOK.setOnClickListener() {
-            val hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
-            val minute = calendar.get(Calendar.MINUTE).toString()
-            val label = binding.alarmEditTxt.text.toString()
-            if (id == -1) {
-                val alarmCreate = Alarm(id, hour, minute, null, unit, label, true)
-                databaseHelper.createData(alarmCreate)
-                Toast.makeText(this, "Successfully Saved", Toast.LENGTH_SHORT).show()
-                finish()
-            } else if (id != -1) {
-                if (hour != alarm.Hour || minute != alarm.Minute || label != alarm.Label) {
-                    var alarmUpdate = Alarm(id, hour, minute, null, unit, label, true)
-                    databaseHelper.updateData(alarmUpdate)
-                    Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }
-        }
-        //Cancel or delete Alarm
-        binding.btnCancel.setOnClickListener(){
-            //Btn Cancel
-            if(id == -1){
-                onBackPressed()
-            }
-            else if(id != -1){
-                databaseHelper.deleteData(id)
-                Toast.makeText(this, "Successfully Deleted", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        }
-
 
     }
 }
