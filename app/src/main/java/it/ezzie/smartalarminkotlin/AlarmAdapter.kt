@@ -44,11 +44,10 @@ class AlarmAdapter(private var context : Context, private var alarmList : List<A
         }
         //Init Alarm Switch UI
         val toggleSwitch = holder.binding.alarmSwitch
-        if(toggleSwitch.isChecked){
-            databaseHelper.updateSwitch(true, alarm)
-        }
-        else{
-            databaseHelper.updateSwitch(false, alarm)
+        toggleSwitch.isChecked = alarm.On
+        toggleSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            databaseHelper.updateSwitch(isChecked,alarm)
+            alarm.On = isChecked
         }
     }
 

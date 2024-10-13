@@ -119,8 +119,8 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
     fun updateSwitch( boo : Boolean ,alarm: Alarm){
         var db = writableDatabase
-        val whereClause = "$COLUMN_ID"
-        val whereArgus = arrayOf<String>(alarm.toString())
+        val whereClause = "$COLUMN_ID = ?"
+        val whereArgus = arrayOf<String>(alarm.id.toString())
         var value = ContentValues()
         value.put(COLUMN_ON, boo)
         db.update(TABLE_NAME,value,whereClause,whereArgus)

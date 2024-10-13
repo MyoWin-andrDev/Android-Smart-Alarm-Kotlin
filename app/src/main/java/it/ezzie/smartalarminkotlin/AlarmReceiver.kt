@@ -25,13 +25,14 @@ class AlarmReceiver : BroadcastReceiver() {
     }
     private fun createChannel(context : Context , alarmLabel : String){
         val channelId = "alarm_channel"
-        val ringtone : Uri = Uri.parse("android.resource:// ${context.packageName} / ${R.raw.playing_god}")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val ringtone : Uri = Uri.parse("android.resource://${context.packageName}/${R.raw.playing_god}")
             //Creating Notification Channel
             val notificationChannel: NotificationChannel = NotificationChannel(channelId, "Alarm Notification", NotificationManager.IMPORTANCE_HIGH)
             notificationChannel.setSound(ringtone,null)
             //Creating Notification Manager
             val notificationManager : NotificationManager = context.getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(notificationChannel)
             //Creating Notification Builder
             val builder : NotificationCompat.Builder = NotificationCompat.Builder(context, channelId)
                 .setContentTitle("Alarm")

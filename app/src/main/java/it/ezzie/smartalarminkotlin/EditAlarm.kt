@@ -80,7 +80,7 @@ class EditAlarm : AppCompatActivity() {
             val label = binding.alarmEditTxt.text.toString()
             //Create Alarm
             if(alarm == null){
-                val alarmCreate = Alarm(id, hour, minute,null, unit, label, true)
+                val alarmCreate = Alarm(id, hour, minute.format("%02d"),null, unit, label, true)
                 scheduleAlarm(this,alarmCreate)
                 databaseHelper.createData(alarmCreate)
                 Toast.makeText(this, "Successfully Saved", Toast.LENGTH_SHORT).show()
@@ -89,7 +89,7 @@ class EditAlarm : AppCompatActivity() {
             //Update
             else if(alarm != null){
                 if(hour != alarm.Hour || minute != alarm.Minute || label != alarm.Label){
-                    val alarmUpdate = Alarm(id, hour, minute,null, unit, label, true)
+                    val alarmUpdate = Alarm(id, hour, minute.format("%02d"),null, unit, label, true)
                     scheduleAlarm(this,alarmUpdate)
                     databaseHelper.updateData(alarmUpdate)
                     Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT).show()
@@ -117,8 +117,7 @@ class EditAlarm : AppCompatActivity() {
         var alarmManager : AlarmManager = context.getSystemService(AlarmManager::class.java)
         val intent = Intent(this, AlarmReceiver::class.java)
         intent.putExtra("alarmLabel", alarm.Label)
-        startActivity(intent)
-        val pendingIndent : PendingIntent = PendingIntent.getBroadcast(context, ((alarm.Hour).toInt() * 100 ) + alarm.Minute.toInt() , intent, PendingIntent.FLAG_UPDATE_CURRENT  )
+        val pendingIndent : PendingIntent = PendingIntent.getBroadcast(context, ((alarm.Hour).toInt() * 100 ) + alarm.Minute.toInt() , intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         //Setting alarm to ring
         var alarmCalendar : Calendar = Calendar.getInstance()
         alarmCalendar.set(Calendar.HOUR_OF_DAY, alarm.Hour.toInt())
