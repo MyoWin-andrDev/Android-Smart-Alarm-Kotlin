@@ -1,6 +1,10 @@
 package it.ezzie.smartalarminkotlin
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -104,6 +108,25 @@ class EditAlarm : AppCompatActivity() {
                 Toast.makeText(this, "Successfully Deleted", Toast.LENGTH_SHORT).show()
                 finish()
             }
+        }
+    }
+    @SuppressLint("ScheduleExactAlarm")
+    private fun scheduleAlarm(context : Context, alarm : Alarm){
+        var alarmManager : AlarmManager = context.getSystemService(AlarmManager::class.java)
+        val intent = Intent(this, AlarmReceiver::class.java)
+        intent.putExtra("alarmLabel", alarm.Label)
+        startActivity(intent)
+        val pendingIndent : PendingIntent = PendingIntent.getBroadcast(context, ((alarm.Hour).toInt() * 100 ) + alarm.Minute.toInt() , intent, PendingIntent.FLAG_UPDATE_CURRENT  )
+        //Setting alarm to ring
+        var alarmCalendar : Calendar = Calendar.getInstance()
+        alarmCalendar.set(Calendar.HOUR_OF_DAY, alarm.Hour.toInt())
+        alarmCalendar.set(Calendar.MINUTE, alarm.Minute.toInt())
+        alarmCalendar.set(Calendar.SECOND, 0)
+        if(alarm.On){
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmCalendar.timeInMillis, pendingIndent)
+        }
+        else{
+            alarmManager.cancel(pendingIndent)
         }
     }
 }
