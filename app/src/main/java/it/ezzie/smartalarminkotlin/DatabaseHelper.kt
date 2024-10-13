@@ -1,5 +1,6 @@
 package it.ezzie.smartalarminkotlin
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -21,7 +22,7 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     }
     override fun onCreate(db: SQLiteDatabase?) {
-        var CREATE_TABLE_QUERY = "CREATE TABLE $TABLE_NAME ( " +
+        val CREATE_TABLE_QUERY = "CREATE TABLE $TABLE_NAME ( " +
                 "$COLUMN_ID INTEGER PRIMARY KEY UNIQUE ," +
                 "$COLUMN_HOUR TEXT, " +
                 "$COLUMN_MINUTE TEXT, " +
@@ -33,14 +34,14 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        var DROP_TABLE_QUERY = "DROP TABLE IF EXISTS $TABLE_NAME"
+        val DROP_TABLE_QUERY = "DROP TABLE IF EXISTS $TABLE_NAME"
         db?.execSQL(DROP_TABLE_QUERY)
         onCreate(db)
     }
 
     fun createData(alarm : Alarm){
-        var db = writableDatabase
-        var value = ContentValues()
+        val db = writableDatabase
+        val value = ContentValues()
         value.put(COLUMN_ID, alarm.id)
         value.put(COLUMN_HOUR, alarm.Hour)
         value.put(COLUMN_MINUTE, alarm.Minute)
@@ -53,19 +54,19 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     fun getAllData () : List<Alarm>{
-        var alarmList = arrayListOf<Alarm>()
-        var db = readableDatabase
-        var READ_QUERY = "SELECT * FROM $TABLE_NAME"
-        var cursor = db.rawQuery(READ_QUERY, null)
+        val alarmList = arrayListOf<Alarm>()
+        val db = readableDatabase
+        val READ_QUERY = "SELECT * FROM $TABLE_NAME"
+        val cursor = db.rawQuery(READ_QUERY, null)
         while (cursor.moveToNext()) {
-            var id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
-            var hour = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
-            var minute = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
-            var day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
-            var unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
-            var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
-            var on : Boolean = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) == 1
-            var alarm = Alarm(id, hour, minute, day, unit, label, on)
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            val hour = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
+            val minute = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
+            val day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
+            val unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
+            val label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
+            val on : Boolean = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) == 1
+            val alarm = Alarm(id, hour, minute, day, unit, label, on)
             alarmList.add(alarm)
         }
         cursor.close()
@@ -74,35 +75,34 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
     fun deleteData(alarmId : Int){
-        var db = writableDatabase
-        var whereClause = "$COLUMN_ID = ?"
-        var whereArgs = arrayOf(alarmId as String)
+        val db: SQLiteDatabase = writableDatabase
+        val whereClause = "$COLUMN_ID = ?"
+        val whereArgs = arrayOf(alarmId as String)
         db.delete(TABLE_NAME, whereClause, whereArgs)
         db.close()
     }
 
-    fun getAlarmById ( id : Int) : Alarm {
-        var db = readableDatabase
-        var READ_ID_QUERY = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = ?"
-        var value = ContentValues()
-        var cursor = db.rawQuery(READ_ID_QUERY, null)
-            var id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
-            var hour = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
-            var minute = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
-            var day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
-            var unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
-            var label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
-            var on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) as Boolean
-
-            var alarm = Alarm(id, hour, minute, day, unit, label, on)
+    @SuppressLint("Recycle")
+    fun getAlarmById (id : Int) : Alarm {
+        val db = readableDatabase
+        val READ_ID_QUERY = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = $id"
+        val cursor = db.rawQuery(READ_ID_QUERY, null)
+        cursor.moveToFirst()
+            val hour = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
+            val minute = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
+            val day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
+            val unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
+            val label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
+            val on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) == 1
+            val alarm = Alarm(id, hour, minute, day, unit, label, on)
         return alarm
     }
 
     fun updateData(alarm : Alarm){
-        var db = writableDatabase
-        var whereClause = "$COLUMN_ID = ?"
-        var whereArgs = arrayOf(COLUMN_ID as String)
-        var value = ContentValues()
+        val db = writableDatabase
+        val whereClause = "$COLUMN_ID = ?"
+        val whereArgs = arrayOf(COLUMN_ID as String)
+        val value = ContentValues()
         value.put(COLUMN_ID, alarm.id)
         value.put(COLUMN_HOUR, alarm.Hour)
         value.put(COLUMN_MINUTE, alarm.Minute)
