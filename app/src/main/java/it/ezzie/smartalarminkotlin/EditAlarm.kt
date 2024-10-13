@@ -14,16 +14,22 @@ class EditAlarm : AppCompatActivity() {
     private var calendar: Calendar = Calendar.getInstance()
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var unit: String
-    private var id : Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityEditAlarmBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelper(this)
         setContentView(binding.root)
+        returnValue()
         initTimePicker()
     }
-
+    private fun returnValue() : Pair<Int, Alarm?>{
+        val id = intent.getIntExtra("alarmId",-1)
+        var alarm = if(id != -1){
+            databaseHelper.getAlarmById(id)
+        }else{ null }
+        return Pair(id,alarm)
+    }
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     private fun initTimePicker() {
@@ -48,6 +54,12 @@ class EditAlarm : AppCompatActivity() {
             }
             binding.timeCount.text = "Your alarm will ring in $resultHour hr $resultMinute min"
         }
+    }
+    private fun initListener(){
+        var (id,alarm) =returnValue()
+        binding.btnOK.setOnClickListener(){
+            //Create Alarm
 
+        }
     }
 }
