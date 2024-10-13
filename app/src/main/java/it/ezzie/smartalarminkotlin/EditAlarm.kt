@@ -13,7 +13,7 @@ class EditAlarm : AppCompatActivity() {
     private lateinit var binding: ActivityEditAlarmBinding
     private var calendar: Calendar = Calendar.getInstance()
     private lateinit var databaseHelper: DatabaseHelper
-    private lateinit var unit: String
+    private var unit: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -23,10 +23,11 @@ class EditAlarm : AppCompatActivity() {
         returnValue()
         initUpdateUI();
         initTimePicker()
+        initListener()
     }
     private fun returnValue() : Pair<Int, Alarm?>{
         val id = intent.getIntExtra("alarmId",-1)
-        var alarm = if(id != -1){
+        val alarm = if(id != -1){
             databaseHelper.getAlarmById(id)
         }else{ null }
         return Pair(id,alarm)
@@ -38,7 +39,7 @@ class EditAlarm : AppCompatActivity() {
             binding.timePicker.minute = alarm.Minute.toInt()
             binding.alarmEditTxt.setText(alarm.Label)
             binding.btnOK.text = "Update"
-            binding.btnCancel.text = "Cancel"
+            binding.btnCancel.text = "Delete"
         }
     }
 
@@ -68,6 +69,7 @@ class EditAlarm : AppCompatActivity() {
     }
     private fun initListener(){
         val (id,alarm) =returnValue()
+        //Btn OK
         binding.btnOK.setOnClickListener(){
             val hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
             val minute = calendar.get(Calendar.MINUTE).toString()
@@ -77,11 +79,30 @@ class EditAlarm : AppCompatActivity() {
                 val alarmCreate = Alarm(id, hour, minute,null, unit, label, true)
                 databaseHelper.createData(alarmCreate)
                 Toast.makeText(this, "Successfully Saved", Toast.LENGTH_SHORT).show()
+                finish()
             }
+            //Update
             else if(alarm != null){
                 if(hour != alarm.Hour || minute != alarm.Minute || label != alarm.Label){
-
+                    val alarmUpdate = Alarm(id, hour, minute,null, unit, label, true)
+                    databaseHelper.updateData(alarmUpdate)
+                    Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
+            }
+        }
+
+        //Btn Cancel
+        binding.btnCancel.setOnClickListener(){
+            val (id,alarm) = returnValue()
+            if(alarm == null) {
+                //Btn Cancel (For Creating)
+                onBackPressed()
+            }
+            else if(alarm != null){
+                databaseHelper.deleteData(id)
+                Toast.makeText(this, "Successfully Deleted", Toast.LENGTH_SHORT).show()
+                finish()
             }
         }
     }
