@@ -42,7 +42,6 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
     fun createData(alarm : Alarm){
         val db = writableDatabase
         val value = ContentValues()
-        value.put(COLUMN_ID, alarm.id)
         value.put(COLUMN_HOUR, alarm.Hour)
         value.put(COLUMN_MINUTE, alarm.Minute)
         value.put(COLUMN_DAY, alarm.Day)
@@ -77,33 +76,39 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
     fun deleteData(alarmId : Int){
         val db: SQLiteDatabase = writableDatabase
         val whereClause = "$COLUMN_ID = ?"
-        val whereArgs = arrayOf(alarmId as String)
+        val whereArgs = arrayOf(alarmId.toString())
         db.delete(TABLE_NAME, whereClause, whereArgs)
         db.close()
     }
 
     @SuppressLint("Recycle")
-    fun getAlarmById (id : Int) : Alarm {
+    fun getAlarmById(id: Int?): Alarm? {
         val db = readableDatabase
-        val READ_ID_QUERY = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = $id"
-        val cursor = db.rawQuery(READ_ID_QUERY, null)
-        cursor.moveToFirst()
+        val READ_ID_QUERY = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = ?"
+        val cursor = db.rawQuery(READ_ID_QUERY, arrayOf(id.toString()))
+
+        return if (cursor.moveToFirst()) {
             val hour = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
             val minute = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
             val day = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DAY))
             val unit = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UNIT))
             val label = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LABEL))
             val on = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ON)) == 1
-            val alarm = Alarm(id, hour, minute, day, unit, label, on)
-        return alarm
+            Alarm(id!!, hour, minute, day, unit, label, on) // Use !! if you're sure id is not null
+        } else {
+            null // Return null if no alarm found
+        }.also {
+            cursor.close() // Ensure cursor is closed
+            db.close() // Close database
+        }
     }
+
 
     fun updateData(alarm : Alarm){
         val db = writableDatabase
         val whereClause = "$COLUMN_ID = ?"
-        val whereArgs = arrayOf(COLUMN_ID as String)
+        val whereArgs = arrayOf(alarm.id.toString())
         val value = ContentValues()
-        value.put(COLUMN_ID, alarm.id)
         value.put(COLUMN_HOUR, alarm.Hour)
         value.put(COLUMN_MINUTE, alarm.Minute)
         value.put(COLUMN_DAY, alarm.Day)

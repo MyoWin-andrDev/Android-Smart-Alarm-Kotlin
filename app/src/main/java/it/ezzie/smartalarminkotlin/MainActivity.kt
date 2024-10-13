@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var alarmList : List<Alarm>
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var adapter : AlarmAdapter
-    private var REQUEST_CODE  = 123
+    private var REQUEST_CODE = 123
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,19 +29,19 @@ class MainActivity : AppCompatActivity() {
         initUI()
     }
 
-    fun initUI(){
+    private fun initUI(){
         alarmList = databaseHelper.getAllData()
         adapter = AlarmAdapter(this, alarmList, alarmEdit = {alarm ->
-            var intent = Intent(this , EditAlarm::class.java)
+            val intent = Intent(this , EditAlarm::class.java)
             intent.putExtra("alarmId", alarm.id)
             startActivity(intent)
         })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
-    fun initListener(){
+    private fun initListener(){
         binding.floatingBtn.setOnClickListener {
-            var intent = Intent(this, EditAlarm::class.java)
+            val intent = Intent(this, EditAlarm::class.java)
             startActivityForResult(intent,REQUEST_CODE)
         }
     }
