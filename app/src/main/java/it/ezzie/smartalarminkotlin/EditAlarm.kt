@@ -21,6 +21,7 @@ class EditAlarm : AppCompatActivity() {
         databaseHelper = DatabaseHelper(this)
         setContentView(binding.root)
         returnValue()
+        initUpdateUI();
         initTimePicker()
     }
     private fun returnValue() : Pair<Int, Alarm?>{
@@ -29,6 +30,16 @@ class EditAlarm : AppCompatActivity() {
             databaseHelper.getAlarmById(id)
         }else{ null }
         return Pair(id,alarm)
+    }
+    private fun initUpdateUI(){
+        val (id,alarm) = returnValue()
+        if(alarm != null){
+            binding.timePicker.hour = alarm.Hour.toInt()
+            binding.timePicker.minute = alarm.Minute.toInt()
+            binding.alarmEditTxt.setText(alarm.Label)
+            binding.btnOK.text = "Update"
+            binding.btnCancel.text = "Cancel"
+        }
     }
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
@@ -56,10 +67,22 @@ class EditAlarm : AppCompatActivity() {
         }
     }
     private fun initListener(){
-        var (id,alarm) =returnValue()
+        val (id,alarm) =returnValue()
         binding.btnOK.setOnClickListener(){
+            val hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
+            val minute = calendar.get(Calendar.MINUTE).toString()
+            val label = binding.alarmEditTxt.text.toString()
             //Create Alarm
+            if(alarm == null){
+                val alarmCreate = Alarm(id, hour, minute,null, unit, label, true)
+                databaseHelper.createData(alarmCreate)
+                Toast.makeText(this, "Successfully Saved", Toast.LENGTH_SHORT).show()
+            }
+            else if(alarm != null){
+                if(hour != alarm.Hour || minute != alarm.Minute || label != alarm.Label){
 
+                }
+            }
         }
     }
 }
