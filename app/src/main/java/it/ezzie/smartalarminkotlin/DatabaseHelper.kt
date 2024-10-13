@@ -86,7 +86,6 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val db = readableDatabase
         val READ_ID_QUERY = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = ?"
         val cursor = db.rawQuery(READ_ID_QUERY, arrayOf(id.toString()))
-
         return if (cursor.moveToFirst()) {
             val hour = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HOUR))
             val minute = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MINUTE))
@@ -116,6 +115,15 @@ class DatabaseHelper(context : Context) : SQLiteOpenHelper(context, DATABASE_NAM
         value.put(COLUMN_LABEL, alarm.Label)
         value.put(COLUMN_ON, alarm.On)
         db.update(TABLE_NAME, value, whereClause, whereArgs)
+        db.close()
+    }
+    fun updateSwitch( boo : Boolean ,alarm: Alarm){
+        var db = writableDatabase
+        val whereClause = "$COLUMN_ID"
+        val whereArgus = arrayOf<String>(alarm.toString())
+        var value = ContentValues()
+        value.put(COLUMN_ON, boo)
+        db.update(TABLE_NAME,value,whereClause,whereArgus)
         db.close()
     }
 }

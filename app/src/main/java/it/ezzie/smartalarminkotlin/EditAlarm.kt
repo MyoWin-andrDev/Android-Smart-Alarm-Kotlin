@@ -81,6 +81,7 @@ class EditAlarm : AppCompatActivity() {
             //Create Alarm
             if(alarm == null){
                 val alarmCreate = Alarm(id, hour, minute,null, unit, label, true)
+                scheduleAlarm(this,alarmCreate)
                 databaseHelper.createData(alarmCreate)
                 Toast.makeText(this, "Successfully Saved", Toast.LENGTH_SHORT).show()
                 finish()
@@ -89,6 +90,7 @@ class EditAlarm : AppCompatActivity() {
             else if(alarm != null){
                 if(hour != alarm.Hour || minute != alarm.Minute || label != alarm.Label){
                     val alarmUpdate = Alarm(id, hour, minute,null, unit, label, true)
+                    scheduleAlarm(this,alarmUpdate)
                     databaseHelper.updateData(alarmUpdate)
                     Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT).show()
                     finish()

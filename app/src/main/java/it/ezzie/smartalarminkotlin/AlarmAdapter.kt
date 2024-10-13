@@ -39,11 +39,17 @@ class AlarmAdapter(private var context : Context, private var alarmList : List<A
         } else if (alarm.Unit == "PM") {
             holder.binding.imageView.setImageResource(R.drawable.ic_moon)
         }
-        //Init Alarm Switch UI
         holder.binding.listLinear.setOnClickListener{
             alarmEdit.onAlarmClick(alarm)
         }
-
+        //Init Alarm Switch UI
+        val toggleSwitch = holder.binding.alarmSwitch
+        if(toggleSwitch.isChecked){
+            databaseHelper.updateSwitch(true, alarm)
+        }
+        else{
+            databaseHelper.updateSwitch(false, alarm)
+        }
     }
 
 }
