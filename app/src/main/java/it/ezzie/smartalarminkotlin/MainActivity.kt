@@ -3,9 +3,11 @@ package it.ezzie.smartalarminkotlin
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.HorizontalScrollView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import it.ezzie.smartalarminkotlin.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

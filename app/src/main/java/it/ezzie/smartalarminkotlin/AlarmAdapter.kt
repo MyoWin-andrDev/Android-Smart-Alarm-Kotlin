@@ -34,9 +34,9 @@ class AlarmAdapter(private var context : Context, private var alarmList : List<A
         holder.binding.alarmUnit.text = alarm.Unit
 
         //AM/PM View
-        if (alarm.Unit == "AM") {
+        if (alarm.Unit.equals("AM")) {
             holder.binding.imageView.setImageResource(R.drawable.ic_sun)
-        } else if (alarm.Unit == "PM") {
+        } else if (alarm.Unit.equals("PM")) {
             holder.binding.imageView.setImageResource(R.drawable.ic_moon)
         }
         holder.binding.listLinear.setOnClickListener{
