@@ -63,7 +63,6 @@ class EditAlarm : AppCompatActivity() {
             val totalResultMinute = totalSelectedMinute - currentTotalMinute
             var resultHour = totalResultMinute / 60
             var resultMinute = totalResultMinute % 60
-            unit = SimpleDateFormat("a").format(calendar.time)
             if (totalResultMinute < 0) {
                 resultHour = -resultHour
                 resultMinute = -resultMinute
@@ -78,6 +77,7 @@ class EditAlarm : AppCompatActivity() {
             val hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
             val minute = calendar.get(Calendar.MINUTE).toString()
             val label = binding.alarmEditTxt.text.toString()
+            unit = SimpleDateFormat("a").format(calendar.time)
             //Create Alarm
             if(alarm == null){
                 val alarmCreate = Alarm(id, hour, minute.format("%02d"),null, unit, label, true)
